@@ -105,7 +105,7 @@ A retrieval-augmented assistant for Smart Money Concepts. It answers **only from
 ### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="🌟" width="24" height="24" align="top"> Activity
 
 <p align="center">
-  <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D view of my GitHub contributions with language and activity breakdown" width="100%">
+  <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D view of my GitHub contributions with language and activity breakdown" width="72%">
 </p>
 
 <table>
@@ -127,10 +127,12 @@ A retrieval-augmented assistant for Smart Money Concepts. It answers **only from
 </tr>
 </table>
 
+<p align="center">
+  <a href="https://shoaebmalik19.github.io/ShoaebMalik19/"><img src="./assets/game-card.svg" alt="Commit Runner: dodge the bugs, ship the commits. Play in browser." width="440"></a>
+</p>
+
 ---
 
 <p align="center">
-  <sub>Open to <b>software engineering and AI engineering roles</b> and selected freelance builds. The quickest way to reach me is <a href="mailto:shoaebmalik19@gmail.com">email</a>.</sub><br>
-  <a href="https://shoaebmalik19.github.io/ShoaebMalik19/"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png" alt="👾" width="20" height="20" align="center"></a>
-  <sub><a href="https://shoaebmalik19.github.io/ShoaebMalik19/"><b>Commit Runner</b></a>: dodge the bugs, ship to prod. A tiny game I built for this profile.</sub>
+  <sub>Open to <b>software engineering and AI engineering roles</b> and selected freelance builds. The quickest way to reach me is <a href="mailto:shoaebmalik19@gmail.com">email</a>.</sub>
 </p>
