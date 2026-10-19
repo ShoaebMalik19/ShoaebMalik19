@@ -38,6 +38,10 @@ jobs:
     name: snake + pacman + breakout
     runs-on: ubuntu-latest
     steps:
+      - uses: abozanona/pacman-contribution-graph@v5.0.0
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          games: "pacman,breakout"
       - uses: Platane/snk@v3.5.0
         with:
           github_user_name: ${{ github.repository_owner }}
@@ -45,10 +49,8 @@ jobs:
             dist/snake.svg
             dist/snake-dark.svg?palette=github-dark&color_snake=#00ffa3&color_dots=#161b22,#0e4429,#006d32,#26a641,#39d353
             dist/snake-neon.svg?palette=github-dark&color_snake=#ff2e88&color_dots=#151126,#2a1a5e,#4b2bb8,#7c5cff,#b48cff
-      - uses: abozanona/pacman-contribution-graph@v5.0.0
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          games: "pacman,breakout"
+      - name: Fix dist ownership (snk runs in docker as root)
+        run: sudo chown -R "$(id -u):$(id -g)" dist
       - name: Push SVGs to the output branch
         uses: crazy-max/ghaction-github-pages@v5.0.0
         with:
