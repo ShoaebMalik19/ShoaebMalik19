@@ -1,10 +1,10 @@
-// Generates assets/banner.svg: a synthwave grid with a real rotating 3D wireframe
+// Generates assets/banner.svg: a restrained dark header with one slowly rotating 3D wireframe
 // (projected per-frame and animated with SMIL so it works inside GitHub's <img> sandbox).
 import { writeFileSync, mkdirSync } from "node:fs";
 
-const W = 1200, H = 420;
-const FRAMES = 48;
-const DUR = 12; // seconds per full rotation
+const W = 1200, H = 300;
+const FRAMES = 72;
+const DUR = 36; // seconds per full rotation: slow on purpose
 
 // --- icosahedron geometry -------------------------------------------------
 const t = (1 + Math.sqrt(5)) / 2;
@@ -20,124 +20,51 @@ for (let i = 0; i < V.length; i++)
     if (Math.abs(d - 2) < 1e-6) edges.push([i, j]);
   }
 
-function project(p, a, b, cx, cy, s) {
-  let [x, y, z] = p;
-  // rotate Y then X
+function project([x, y, z], a, b, cx, cy, s) {
   [x, z] = [x * Math.cos(a) - z * Math.sin(a), x * Math.sin(a) + z * Math.cos(a)];
   [y, z] = [y * Math.cos(b) - z * Math.sin(b), y * Math.sin(b) + z * Math.cos(b)];
   const f = 6 / (6 + z);
   return [cx + x * s * f, cy + y * s * f, z];
 }
 
-function shapeFrames(cx, cy, s, tilt) {
-  const paths = [], dots = [];
-  for (let k = 0; k <= FRAMES; k++) {
-    const a = (k / FRAMES) * Math.PI * 2;
-    const P = V.map((p) => project(p, a, tilt + Math.sin(a) * 0.25, cx, cy, s));
-    paths.push(edges.map(([i, j]) => `M${P[i][0].toFixed(1)} ${P[i][1].toFixed(1)}L${P[j][0].toFixed(1)} ${P[j][1].toFixed(1)}`).join(""));
-    dots.push(P);
-  }
-  return { paths, dots };
+// split edges into front/back per frame so depth reads clearly
+const front = [], back = [], dotsX = V.map(() => []), dotsY = V.map(() => []), dotsO = V.map(() => []);
+for (let k = 0; k <= FRAMES; k++) {
+  const a = (k / FRAMES) * Math.PI * 2;
+  const P = V.map((p) => project(p, a, 0.42, 965, 150, 60));
+  const seg = ([i, j]) => `M${P[i][0].toFixed(1)} ${P[i][1].toFixed(1)}L${P[j][0].toFixed(1)} ${P[j][1].toFixed(1)}`;
+  front.push(edges.filter(([i, j]) => P[i][2] + P[j][2] <= 0).map(seg).join("") || "M0 0");
+  back.push(edges.filter(([i, j]) => P[i][2] + P[j][2] > 0).map(seg).join("") || "M0 0");
+  P.forEach((p, vi) => { dotsX[vi].push(p[0].toFixed(1)); dotsY[vi].push(p[1].toFixed(1)); dotsO[vi].push(p[2] <= 0 ? "1" : ".35"); });
 }
+const anim = (attr, vals) => `<animate attributeName="${attr}" values="${vals.join(";")}" dur="${DUR}s" repeatCount="indefinite"/>`;
+const dots = V.map((_, vi) => `<circle r="2.6" fill="#5eead4">${anim("cx", dotsX[vi])}${anim("cy", dotsY[vi])}${anim("opacity", dotsO[vi])}</circle>`).join("");
 
-const ico = shapeFrames(1000, 175, 62, 0.45);
-const ico2 = shapeFrames(150, 120, 26, -0.3);
-
-// --- synthwave floor --------------------------------------------------------
-const horizon = 285;
-let vlines = "";
-for (let i = -24; i <= 24; i++) {
-  const xb = W / 2 + i * 70;
-  vlines += `<line x1="${W / 2 + i * 6}" y1="${horizon}" x2="${xb}" y2="${H}"/>`;
-}
-let hlines = "";
-for (let i = 0; i < 10; i++) {
-  // exponential spacing for depth, animated as a whole group
-  const y = horizon + Math.pow(i / 9, 2.1) * (H - horizon);
-  hlines += `<line x1="0" y1="${y.toFixed(1)}" x2="${W}" y2="${y.toFixed(1)}"/>`;
-}
-
-// --- stars ------------------------------------------------------------------
-let seed = 7;
-const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-let stars = "";
-for (let i = 0; i < 70; i++) {
-  const x = rnd() * W, y = rnd() * (horizon - 20), r = rnd() * 1.4 + 0.3, d = (rnd() * 3 + 2).toFixed(1);
-  stars += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" fill="#fff"><animate attributeName="opacity" values="0.15;1;0.15" dur="${d}s" repeatCount="indefinite" begin="${(rnd() * 3).toFixed(1)}s"/></circle>`;
-}
-
-const vertexDots = ico.dots[0].map((_, vi) => {
-  const xs = ico.dots.map((P) => P[vi][0].toFixed(1)).join(";");
-  const ys = ico.dots.map((P) => P[vi][1].toFixed(1)).join(";");
-  return `<circle r="3.2" fill="#00ffa3" filter="url(#glow)"><animate attributeName="cx" values="${xs}" dur="${DUR}s" repeatCount="indefinite"/><animate attributeName="cy" values="${ys}" dur="${DUR}s" repeatCount="indefinite"/></circle>`;
-}).join("");
-
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Shoaeb Malik — AI, Full-Stack and Web3 developer">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Mohammed Shoaeb Malik — Software Engineer building AI systems, full-stack products and Web3 apps">
 <defs>
-  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#05040d"/><stop offset=".55" stop-color="#140a2e"/><stop offset=".68" stop-color="#3a0f4f"/><stop offset=".69" stop-color="#07050f"/><stop offset="1" stop-color="#07050f"/>
-  </linearGradient>
-  <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#ffd23f"/><stop offset=".5" stop-color="#ff2e88"/><stop offset="1" stop-color="#7c5cff"/>
-  </linearGradient>
-  <linearGradient id="name" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#00ffa3"/><stop offset=".5" stop-color="#7cf3ff"/><stop offset="1" stop-color="#b48cff"/>
-    <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0;-1 0" dur="8s" repeatCount="indefinite"/>
-  </linearGradient>
-  <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07050f" stop-opacity="1"/><stop offset=".35" stop-color="#07050f" stop-opacity="0"/></linearGradient>
-  <clipPath id="sunclip"><circle cx="600" cy="${horizon}" r="120"/></clipPath>
-  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="bigglow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".35"/></pattern>
+  <radialGradient id="glow" cx="80%" cy="50%" r="45%"><stop offset="0" stop-color="#14b8a6" stop-opacity=".16"/><stop offset="1" stop-color="#14b8a6" stop-opacity="0"/></radialGradient>
+  <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#ffffff" opacity=".06"/></pattern>
+  <linearGradient id="fadeL" x1="0" y1="0" x2="1" y2="0"><stop offset=".35" stop-color="#0a0d12"/><stop offset=".75" stop-color="#0a0d12" stop-opacity="0"/></linearGradient>
   <style>
+    .sans{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
-    .grid line{stroke:#ff2e88;stroke-width:1.3;opacity:.55}
-    .glitch{animation:glitch 4s steps(1) infinite}
-    .g2{animation:glitch2 4s steps(1) infinite}
-    @keyframes glitch{0%,92%,100%{transform:translate(0,0)}93%{transform:translate(-6px,2px)}95%{transform:translate(5px,-2px)}97%{transform:translate(-3px,0)}}
-    @keyframes glitch2{0%,92%,100%{opacity:0}93%,97%{opacity:.8}}
-    .blink{animation:blink 1s steps(1) infinite}
-    @keyframes blink{50%{opacity:0}}
-    .floor{animation:floor 1.6s linear infinite}
-    @keyframes floor{from{transform:translateY(0)}to{transform:translateY(14px)}}
-    .pulse{animation:pulse 3s ease-in-out infinite}
-    @keyframes pulse{0%,100%{opacity:.85}50%{opacity:1}}
   </style>
 </defs>
+<rect width="${W}" height="${H}" rx="16" fill="#0a0d12"/>
+<rect width="${W}" height="${H}" rx="16" fill="url(#dots)"/>
+<rect width="${W}" height="${H}" rx="16" fill="url(#glow)"/>
 
-<rect width="${W}" height="${H}" fill="url(#sky)"/>
-${stars}
+<path fill="none" stroke="#5eead4" stroke-width="1" opacity=".22">${anim("d", back)}</path>
+<path fill="none" stroke="#5eead4" stroke-width="1.4" opacity=".85" stroke-linecap="round">${anim("d", front)}</path>
+${dots}
 
-<!-- retro sun -->
-<g clip-path="url(#sunclip)" class="pulse">
-  <rect x="480" y="${horizon - 120}" width="240" height="120" fill="url(#sun)"/>
-  ${[0, 1, 2, 3, 4, 5].map((i) => `<rect x="480" y="${horizon - 52 + i * 9}" width="240" height="${2 + i * 1.3}" fill="#140a2e"/>`).join("")}
-</g>
-
-<!-- floor -->
-<rect y="${horizon}" width="${W}" height="${H - horizon}" fill="#07050f"/>
-<g class="grid">${vlines}</g>
-<g class="grid"><g class="floor">${hlines}</g></g>
-<rect y="${horizon}" width="${W}" height="${H - horizon}" fill="url(#fade)"/>
-<line x1="0" y1="${horizon}" x2="${W}" y2="${horizon}" stroke="#ff2e88" stroke-width="2" filter="url(#glow)"/>
-
-<!-- rotating 3D icosahedrons -->
-<path fill="none" stroke="#7cf3ff" stroke-width="1.6" stroke-linejoin="round" filter="url(#glow)" opacity=".9"><animate attributeName="d" values="${ico.paths.join(";")}" dur="${DUR}s" repeatCount="indefinite"/></path>
-${vertexDots}
-<path fill="none" stroke="#b48cff" stroke-width="1.2" opacity=".7"><animate attributeName="d" values="${ico2.paths.join(";")}" dur="${DUR * 0.7}s" repeatCount="indefinite"/></path>
-
-<!-- name -->
-<g class="mono" text-anchor="middle">
-  <text x="600" y="92" font-size="15" fill="#7cf3ff" letter-spacing="6" opacity=".85">&gt; HELLO_WORLD.EXE — BENGALURU, IN</text>
-  <g class="glitch">
-    <text x="603" y="168" font-size="74" font-weight="800" fill="#ff2e88" class="g2" letter-spacing="4">SHOAEB MALIK</text>
-    <text x="597" y="164" font-size="74" font-weight="800" fill="#00ffa3" class="g2" letter-spacing="4">SHOAEB MALIK</text>
-    <text x="600" y="166" font-size="74" font-weight="800" fill="url(#name)" filter="url(#bigglow)" letter-spacing="4">SHOAEB MALIK</text>
-  </g>
-  <text x="600" y="208" font-size="19" fill="#e9e4ff" letter-spacing="2">AI ENGINEER · FULL-STACK DEV · WEB3 BUILDER<tspan fill="#00ffa3" class="blink"> ▌</tspan></text>
-</g>
-
-<rect width="${W}" height="${H}" fill="url(#scan)" pointer-events="none"/>
+<rect width="760" height="${H}" fill="url(#fadeL)" opacity=".9"/>
+<g class="mono" font-size="14" fill="#5eead4" letter-spacing="2.5"><text x="72" y="96">SOFTWARE ENGINEER · BENGALURU</text></g>
+<text x="70" y="160" class="sans" font-size="58" font-weight="700" fill="#f3f5f7" letter-spacing="-1">Mohammed Shoaeb Malik</text>
+<text x="72" y="202" class="sans" font-size="21" fill="#9aa4b2">I build AI systems, full-stack products and on-chain apps.</text>
+<text x="72" y="232" class="sans" font-size="16" fill="#6b7685">B.Tech, Information Science  ·  Open to SWE and AI engineering roles</text>
+<rect x="72" y="256" width="44" height="3" rx="1.5" fill="#5eead4"/>
+<rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="15.5" fill="none" stroke="#ffffff" stroke-opacity=".08"/>
 </svg>
 `;
 
