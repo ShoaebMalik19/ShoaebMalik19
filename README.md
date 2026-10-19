@@ -6,7 +6,7 @@
   <a href="mailto:shoaebmalik19@gmail.com"><img src="https://img.shields.io/badge/shoaebmalik19@gmail.com-0a0d12?style=flat-square&logo=gmail&logoColor=5eead4" alt="Email"></a>
 </p>
 
-### About
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="👋" width="24" height="24" align="top"> About
 
 I'm a software engineer working across **applied AI, full-stack product engineering and Web3**. I care about the unglamorous parts that make software trustworthy: tenant isolation, tests that run against a real database, privacy that stays on the device, and contracts small enough to reason about.
 
@@ -14,7 +14,7 @@ I'm a software engineer working across **applied AI, full-stack product engineer
 - **Recently:** on-device PII redaction for browser agents, built for an ISRO problem statement at Smart India Hackathon
 - **Interested in:** LLM systems and retrieval, applied computer vision, and secure smart-contract design
 
-### Selected work
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="🚀" width="24" height="24" align="top"> Selected work
 
 <table>
 <tr>
@@ -87,7 +87,7 @@ A retrieval-augmented assistant for Smart Money Concepts. It answers **only from
 
 <sub>More: [prediction market](https://github.com/ShoaebMalik19/Prediction-Market) · [real-time violence detection](https://github.com/ShoaebMalik19/Crime_detector-) · [sentiment analyzer](https://github.com/ShoaebMalik19/feedback-analyzer) · [all repositories →](https://github.com/ShoaebMalik19?tab=repositories)</sub>
 
-### Stack
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/High%20Voltage.png" alt="⚡" width="24" height="24" align="top"> Stack
 
 <p>
   <img src="https://skillicons.dev/icons?i=ts,react,nextjs,nodejs,python,postgres,supabase,solidity,tailwind,pytorch,opencv,githubactions&theme=dark&perline=12" alt="TypeScript, React, Next.js, Node.js, Python, PostgreSQL, Supabase, Solidity, Tailwind, PyTorch, OpenCV, GitHub Actions">
@@ -102,21 +102,35 @@ A retrieval-augmented assistant for Smart Money Concepts. It answers **only from
 | **Commerce** | Shopify apps (OAuth, webhooks, fulfillment) · Liquid theme development |
 | **Quality & delivery** | Vitest · Hardhat tests · GitHub Actions CI · Vercel |
 
-### Activity
+### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="🌟" width="24" height="24" align="top"> Activity
 
 <p align="center">
   <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D view of my GitHub contributions with language and activity breakdown" width="100%">
 </p>
 
+<table>
+<tr>
+<td width="50%">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg">
-  <img alt="Contribution graph animation" src="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg" width="100%">
+  <img alt="Snake eating my contribution graph" src="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg" width="100%">
 </picture>
+</td>
+<td width="50%">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/pacman-contribution-graph-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/pacman-contribution-graph.svg">
+  <img alt="Pac-Man eating my contribution graph" src="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/pacman-contribution-graph.svg" width="100%">
+</picture>
+</td>
+</tr>
+</table>
 
 ---
 
 <p align="center">
-  <sub>Open to <b>software engineering and AI engineering roles</b> and selected freelance builds. The quickest way to reach me is <a href="mailto:shoaebmalik19@gmail.com">email</a>.<br>
-  Side project: <a href="https://shoaebmalik19.github.io/ShoaebMalik19/">Commit Runner</a>, a small canvas game I made for this profile.</sub>
+  <sub>Open to <b>software engineering and AI engineering roles</b> and selected freelance builds. The quickest way to reach me is <a href="mailto:shoaebmalik19@gmail.com">email</a>.</sub><br>
+  <a href="https://shoaebmalik19.github.io/ShoaebMalik19/"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Ghost.png" alt="👾" width="20" height="20" align="center"></a>
+  <sub><a href="https://shoaebmalik19.github.io/ShoaebMalik19/"><b>Commit Runner</b></a>: dodge the bugs, ship to prod. A tiny game I built for this profile.</sub>
 </p>
