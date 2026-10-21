@@ -35,13 +35,9 @@ jobs:
           fi
 
   games:
-    name: snake + pac-man
+    name: contribution snake
     runs-on: ubuntu-latest
     steps:
-      - uses: abozanona/pacman-contribution-graph@v5.0.0
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          games: "pacman"
       - uses: Platane/snk@v3.5.0
         with:
           github_user_name: ${{ github.repository_owner }}

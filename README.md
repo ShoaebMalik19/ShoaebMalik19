@@ -108,24 +108,13 @@ A retrieval-augmented assistant for Smart Money Concepts. It answers **only from
   <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D view of my GitHub contributions with language and activity breakdown" width="72%">
 </p>
 
-<table>
-<tr>
-<td width="50%">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg">
-  <img alt="Snake eating my contribution graph" src="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg" width="100%">
-</picture>
-</td>
-<td width="50%">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/pacman-contribution-graph-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/pacman-contribution-graph.svg">
-  <img alt="Pac-Man eating my contribution graph" src="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/pacman-contribution-graph.svg" width="100%">
-</picture>
-</td>
-</tr>
-</table>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg">
+    <img alt="Snake eating my contribution graph" src="https://raw.githubusercontent.com/ShoaebMalik19/ShoaebMalik19/output/snake.svg" width="72%">
+  </picture>
+</p>
 
 <p align="center">
   <a href="https://shoaebmalik19.github.io/ShoaebMalik19/"><img src="./assets/game-card.svg" alt="Commit Runner: dodge the bugs, ship the commits. Play in browser." width="440"></a>
